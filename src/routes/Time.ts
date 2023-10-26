@@ -1,6 +1,6 @@
 import { Request, Response, Router } from 'express'
 
-function time( req:Request, res:Response ) {
+async function time( req:Request, res:Response ) {
   req
   const currentTime: number = Date.now()
   res.send( { currentTime } ) 

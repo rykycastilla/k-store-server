@@ -1,2 +1,4 @@
+.env
 dist/
+dump.rdb
 node_modules/
