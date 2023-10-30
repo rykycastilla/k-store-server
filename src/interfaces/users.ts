@@ -1,5 +1,9 @@
+import BackupPostRequest from '../types/backup_post_request'
+import db from './db'
 import sessions from './sessions'
 import Storage from '../classes/Storage'
+
+interface Backup extends BackupPostRequest { date:number }
 
 interface User {
   name: string,
@@ -41,7 +45,25 @@ class Users extends Storage<UsersIndex> {
     const storage = await this.storage
     delete storage[ id ]
     sessions.clean( id )
+    await db.delete( `${ id }_backup` )
     this.saveStorage()
+  }
+
+  // Save the user information in the database
+  public async saveBackup( id:string, data:Backup ): Promise<boolean> {
+    const storage = await this.storage
+    const userExist = Boolean( storage[ id ] )
+    if( userExist ) {
+      const dbKey = `${ id }_backup`
+      await db.set( dbKey, data )
+    }
+    return userExist
+  }
+
+  // Load the user backup from the database
+  public async loadBackup( id:string ): Promise<Backup|null> {
+    const backup = await db.get<Backup>( `${ id }_backup` )
+    return backup
   }
 
 }
@@ -49,4 +71,4 @@ class Users extends Storage<UsersIndex> {
 const users = new Users()
 
 export default users
-export { User }
+export { Backup, User }

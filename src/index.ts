@@ -1,3 +1,4 @@
+import Backup from './routes/Backup'
 import express, { Express } from 'express'
 import Login from './routes/Login'
 import passport from 'passport'
@@ -18,5 +19,6 @@ app.use( '/time', Time )
 app.use( '/privacy', Privacy )
 app.use( '/login', Login )
 app.use( '/user', User )
+app.use( '/backup', Backup )
 
 app.listen( PORT, () => console.log( `Server on port: ${ PORT }` ) )

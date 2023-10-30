@@ -50,7 +50,7 @@ async function picture( req:Request, res:Response ) {
   
 }
 
-async function deleteIndex( req:Request, res:Response ) {
+async function delete_index( req:Request, res:Response ) {
   // Verifying user access
   const { authorization } = req.headers
   if( !authorization ) {
@@ -63,7 +63,7 @@ async function deleteIndex( req:Request, res:Response ) {
     return
   }
   // Deleting user
-  users.logout( id )
+  await users.logout( id )
   res.send( { success: true } )
 }
 
@@ -75,6 +75,6 @@ User.get( '/email', email )
 User.get( '/picture', picture )
 
 // DELETE
-User.delete( '/', deleteIndex )
+User.delete( '/', delete_index )
 
 export default User
