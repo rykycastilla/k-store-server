@@ -5,7 +5,8 @@ const messages = {
   400: 'Unexpected Request Syntax',
   403: 'Invalid Authorization Token',
   500: 'Unexpected Issue',
-  404: 'The information you are requesting does not exists'
+  404: 'The information you are requesting does not exists',
+  413: 'Payload size exceeds the limit',
 }
 
 enum Status {
@@ -14,6 +15,7 @@ enum Status {
   FORBIDDEN = 403,
   INTERNAL_SERVER_ERROR = 500,
   NOT_FOUND = 404,
+  PAYLOAD_TOO_LARGE = 413,
 }
 
 function sendError( status:Status, res:Response ) {

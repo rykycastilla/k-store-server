@@ -1,4 +1,5 @@
 import { createClient, RedisClientType } from 'redis'
+import cryptography from './cryptography'
 import { REDIS_STORE } from '../env'
 
 class DB {
@@ -13,22 +14,28 @@ class DB {
 
   public async set<T>( key:string, value:T ) {
     await this.conection
-    const encodeValue: string = JSON.stringify( value )
-    await this.client.set( key, encodeValue )
+    const encodeValue: string = JSON.stringify( value ),
+      encryptedKey: string = cryptography.encrypt( key ),
+      encryptedValue: string = cryptography.encrypt( encodeValue )
+    await this.client.set( encryptedKey, encryptedValue )
   }
 
   public async get<T>( key:string ): Promise<T|null> {
     await this.conection
-    const encodeValue: string | null = await this.client.get( key )
-    const value: T | null = encodeValue
-      ? JSON.parse( encodeValue )
-      : null
+    // Loading encrypted values from DB
+    const encryptedKey: string = cryptography.encrypt( key ),
+      encryptedValue: string | null = await this.client.get( encryptedKey )
+    // Decrypting
+    if( !encryptedValue ) { return null }
+    const encodeValue: string = cryptography.decrypt( encryptedValue ),
+      value: T = JSON.parse( encodeValue )
     return value
   }
 
   public async delete( key:string ) {
     await this.conection
-    await this.client.del( key )
+    const encryptedKey: string = cryptography.encrypt( key )
+    await this.client.del( encryptedKey )
   }
 
 }
