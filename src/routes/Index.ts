@@ -3,7 +3,14 @@ import { META_GOOGLE_ID } from '../env'
 
 async function index( req:Request, res:Response ) {
   req
-  res.send( META_GOOGLE_ID )
+  res.send( `
+<html>
+  <head>
+    ${ META_GOOGLE_ID }
+  </head>
+  <body></body>
+</html>
+  ` )
 }
 
 const Index: Router = Router()
