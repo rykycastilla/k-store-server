@@ -7,6 +7,7 @@ interface Env {
   GOOGLE_CALLBACK_URL: string,
   GOOGLE_CLIENT_ID: string,
   GOOGLE_CLIENT_SECRET: string,
+  META_GOOGLE_ID: string,
   REDIS_STORE: string,
   SESSION_CALLBACK: string,
 }
@@ -16,6 +17,7 @@ export const {
   GOOGLE_CALLBACK_URL,
   GOOGLE_CLIENT_ID,
   GOOGLE_CLIENT_SECRET,
+  META_GOOGLE_ID,
   REDIS_STORE,
   SESSION_CALLBACK,
 } = process.env as unknown as Env

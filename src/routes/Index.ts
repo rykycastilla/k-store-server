@@ -1,8 +1,12 @@
-import express, { Router } from 'express'
+import { Request, Response, Router } from 'express'
+import { META_GOOGLE_ID } from '../env'
 
-const INDEX_STATIC = `${ __dirname }/../../home/`
+async function index( req:Request, res:Response ) {
+  req
+  res.send( META_GOOGLE_ID )
+}
 
 const Index: Router = Router()
-Index.use( '/', express.static( INDEX_STATIC ) )
+Index.get( '/', index )
 
 export default Index
