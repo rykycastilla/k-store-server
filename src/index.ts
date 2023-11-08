@@ -1,5 +1,6 @@
 import Backup from './routes/Backup'
 import express, { Express } from 'express'
+import Index from './routes/Index'
 import Login from './routes/Login'
 import passport from 'passport'
 import payloadSizeLimit, { DataUnits } from './middlewares/payload_size_limit'
@@ -21,6 +22,7 @@ app.use( timeout( 10_000 ) )
 app.use( payloadSizeLimit( 1, DataUnits.MB ) )
 
 // Routes
+app.use( '/', Index )
 app.use( '/time', Time )
 app.use( '/privacy', Privacy )
 app.use( '/login', Login )
